@@ -1,0 +1,143 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Luxury brand palette */
+  --color-navy: #1a1a2e;
+  --color-navy-soft: #2d2d44;
+  --color-accent: #c9a84c;
+  --color-light: #f8f5f0;
+  --color-gold: #d4af37;
+  --color-gold-light: #e8c84a;
+  --color-gold-dark: #b8942a;
+  --color-cream: #f5efe6;
+  --color-dark: #0f0f1a;
+
+  /* Semantic tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 10px);
+  --radius-3xl: calc(var(--radius) + 18px);
+}
+
+:root {
+  color-scheme: light;
+  --background: #f8f5f0;
+  --foreground: #1a1a2e;
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a2e;
+  --primary: #1a1a2e;
+  --primary-foreground: #f8f5f0;
+  --secondary: #f5efe6;
+  --secondary-foreground: #1a1a2e;
+  --muted: #f5efe6;
+  --muted-foreground: #6b6a78;
+  --accent: #d4af37;
+  --accent-foreground: #1a1a2e;
+  --destructive: #b3261e;
+  --border: #e6ddcd;
+  --input: #e6ddcd;
+  --ring: #d4af37;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans), 'Manrope', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Gold-themed selection & focus (replace default blue) */
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-gold) 35%, transparent);
+    color: var(--color-navy);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  input,
+  textarea,
+  select {
+    accent-color: var(--color-gold);
+  }
+  button,
+  a {
+    cursor: pointer;
+  }
+  button:disabled,
+  [disabled] {
+    cursor: not-allowed;
+  }
+  /* Hide native scrollbars where used for carousels */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold) 55%, var(--color-gold-dark));
+  }
+  .glass-light {
+    background: color-mix(in srgb, #ffffff 70%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .glass-dark {
+    background: color-mix(in srgb, #1a1a2e 45%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .shadow-luxury {
+    box-shadow: 0 20px 60px -20px rgba(26, 26, 46, 0.25), 0 8px 24px -12px rgba(26, 26, 46, 0.12);
+  }
+  .shadow-gold-glow {
+    box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.45);
+  }
+}
