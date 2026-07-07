@@ -129,7 +129,7 @@ export function Hero() {
               {slide.eyebrow}
             </motion.span>
 
-            <h1 className="mt-6 font-serif text-5xl font-medium leading-[1.05] text-light text-balance sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 font-serif text-5xl font-medium leading-[1.08] text-light text-balance overflow-visible pb-2 sm:text-6xl lg:text-7xl">
               {slide.title.map((line, i) => (
                 <motion.span
                   key={`${index}-${i}`}

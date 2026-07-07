@@ -1,21 +1,21 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Bodoni_Moda, Manrope } from 'next/font/google'
+import { Open_Sans, Titillium_Web } from 'next/font/google'
 import { FilterProvider } from '@/components/providers/filter-provider'
 import { FloatingActions } from '@/components/common/floating-actions'
 import './globals.css'
 
-const bodoniModa = Bodoni_Moda({
+const titilliumWeb = Titillium_Web({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-serif',
+  weight: ['200', '300', '400', '600', '700', '900'],
+  variable: '--font-serif-heading',
   display: 'swap',
 })
 
-const manrope = Manrope({
+const openSans = Open_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-sans',
+  variable: '--font-sans-body',
   display: 'swap',
 })
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${bodoniModa.variable} ${manrope.variable} bg-background`}>
+    <html lang="en" className={`${titilliumWeb.variable} ${openSans.variable} bg-background`}>
       <body className="antialiased">
         <FilterProvider>
           {children}

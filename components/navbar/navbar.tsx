@@ -28,20 +28,28 @@ export function Navbar() {
   // Active section tracking
   useEffect(() => {
     const ids = NAV_LINKS.map((l) => l.href.replace('#', ''))
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    if (!elements.length) return
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(`#${entry.target.id}`)
-          }
-        })
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleEntry) {
+          setActive(`#${visibleEntry.target.id}`)
+        } else if (window.scrollY < 180) {
+          setActive('#home')
+        }
       },
-      { rootMargin: '-30% 0px -55% 0px', threshold: 0.3 },
+      { rootMargin: '-20% 0px -45% 0px', threshold: [0.2, 0.4, 0.6] },
     )
-    ids.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+
+    elements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 
@@ -56,8 +64,9 @@ export function Navbar() {
 
   const handleNav = (href: string) => {
     setMenuOpen(false)
+    setActive(href)
     const el = document.querySelector(href)
-    el?.scrollIntoView({ behavior: 'smooth' })
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   return (
@@ -128,58 +137,31 @@ export function Navbar() {
                 <button
                   onClick={() => handleNav(link.href)}
                   className={cn(
-                    'relative rounded-full px-3.5 py-1 text-sm font-medium transition-colors duration-300',
+                    'group relative rounded-full px-3.5 py-2 text-sm font-semibold uppercase tracking-[0.22em] transition-all duration-300',
                     isActive
-                      ? scrolled ? 'text-navy' : 'text-white'
+                      ? scrolled
+                        ? 'text-navy'
+                        : 'text-white'
                       : scrolled
-                        ? 'text-navy/60 hover:text-navy'
-                        : 'text-white/70 hover:text-white',
+                        ? 'text-navy/80 hover:text-navy'
+                        : 'text-white/90 hover:text-white',
                   )}
                 >
-                  {/* Tubelight active indicator */}
-                  {isActive && (
-                    <>
-                      {/* Glowing pill background */}
-                      <motion.span
-                        layoutId="tubelight-pill"
-                        className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-gold-light via-gold to-gold-dark"
-                        transition={{
-                          type: 'spring',
-                          stiffness: 320,
-                          damping: 30,
-                        }}
-                      />
-                      {/* Glowing tubelight effect above */}
-                      <motion.span
-                        layoutId="tubelight-glow"
-                        className="absolute -top-2.5 left-1/2 h-1 w-8 -translate-x-1/2 rounded-full bg-gold"
-                        transition={{
-                          type: 'spring',
-                          stiffness: 320,
-                          damping: 30,
-                        }}
-                      >
-                        <motion.span
-                          className="absolute inset-0 rounded-full bg-gold blur-md"
-                          animate={{
-                            opacity: [0.4, 0.8, 0.4],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                          }}
-                        />
-                      </motion.span>
-                    </>
-                  )}
                   <motion.span
                     whileHover={{ y: -1 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                    className="inline-block"
+                    className="relative z-10 inline-block"
                   >
                     {link.label}
                   </motion.span>
+                  <span
+                    className={cn(
+                      'absolute bottom-0 left-1/2 h-[2px] w-full -translate-x-1/2 rounded-full bg-gold transition-all duration-300',
+                      isActive
+                        ? 'scale-x-100 opacity-100'
+                        : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100',
+                    )}
+                  />
                 </button>
               </li>
             )

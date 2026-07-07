@@ -21,7 +21,7 @@ export function PropertyCard({ property, onOpen }: { property: Property; onOpen:
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
       onClick={onOpen}
-      className="group relative flex cursor-pointer flex-col overflow-hidden rounded-3xl border border-border/70 bg-card shadow-luxury transition-shadow duration-500 hover:shadow-[0_36px_80px_-30px_rgba(26,26,46,0.4)]"
+      className="group relative flex cursor-pointer flex-col overflow-hidden bg-card shadow-luxury transition-shadow duration-500 hover:shadow-[0_36px_80px_-30px_rgba(26,26,46,0.4)]"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
