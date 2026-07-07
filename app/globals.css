@@ -74,11 +74,13 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans), 'Manrope', ui-sans-serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   /* Gold-themed selection & focus (replace default blue) */
